@@ -1,0 +1,41 @@
+body {
+  width: 300px;
+  padding: 10px;
+}
+
+h1 {
+  text-align: center;
+}
+
+#noteInput {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+#addTimestampBtn {
+  width: 100%;
+  padding: 8px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+#timestampList {
+  list-style: none;
+  padding: 0;
+}
+
+.timestampItem {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.deleteBtn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+}

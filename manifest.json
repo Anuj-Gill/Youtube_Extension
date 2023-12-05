@@ -1,0 +1,29 @@
+{
+  "name": "MarkIt!",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "description": "A simple extension to bookmark timestamps on YouTube videos",
+  "action": {
+    "default_icon": {
+      "16": "images/logo.png",
+      "24": "images/logo.png",
+      "32": "images/logo.png"
+    },
+    "default_title": "MarkIt!",
+    "default_popup": "popup.html"
+    },
+    "icons": {
+      "16": "images/logo.png",
+      "32": "images/logo.png",
+      "48": "images/logo.png",
+      "128": "images/logo.png"
+    },
+    "author": {
+      "email": "anujgill212@gmail.com"
+    },
+    "background": {
+      "service_worker": "service-worker.js",
+      "type": "module"
+    }
+  
+}
