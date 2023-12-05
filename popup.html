@@ -12,11 +12,16 @@
   <form id="markItForm">
     <label for="noteInput">Add Timestamp Note:</label>
     <input type="text" id="noteInput" name="noteInput" required>
-    <button type="button" id="addTimestampBtn">Add Timestamp</button>
+    <input type="submit" value="Add Timestamp" id="markItForm">
   </form>
   
   <div class="timeStampsList">
     <h2>Bookmarks</h2>
+    <div>
+      <p class="index">#</p>
+      <p class="timeStamp"></p>
+      <p class="noteAdded"></p>
+    </div>
   </div>
   <script src="popup.js"></script>
 </body>

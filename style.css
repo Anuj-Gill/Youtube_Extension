@@ -43,3 +43,7 @@ h1,h2 {
 #markItForm{
   visibility: visible;
 }
+
+p{
+  display: inline-block;
+}
