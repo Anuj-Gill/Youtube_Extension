@@ -12,6 +12,13 @@
     "default_title": "MarkIt!",
     "default_popup": "popup.html"
     },
+    "content_scripts": [
+      {
+        "matches": ["https://www.youtube.com/*/"],
+        "css": ["content-style.css"],
+        "js": ["content.js"]
+      }]
+    ,
     "icons": {
       "16": "images/logo.png",
       "32": "images/logo.png",
@@ -24,6 +31,10 @@
     "background": {
       "service_worker": "service-worker.js",
       "type": "module"
-    }
+    },
+    "permissions": ["activeTab", "declarativeContent",
+    "storage", "tabs","scripting"],
+    "host_permissions":["https://www.youtube.com/*/"]
+    
   
 }

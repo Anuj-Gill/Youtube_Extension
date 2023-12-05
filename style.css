@@ -3,7 +3,7 @@ body {
   padding: 10px;
 }
 
-h1 {
+h1,h2 {
   text-align: center;
 }
 
@@ -38,4 +38,8 @@ h1 {
   border: none;
   padding: 5px;
   cursor: pointer;
+}
+
+#markItForm{
+  visibility: visible;
 }
