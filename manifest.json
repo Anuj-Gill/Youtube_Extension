@@ -27,7 +27,7 @@
       "email": "anujgill212@gmail.com"
     },
     "background": {
-      "service_worker": "service-worker.js",
+      "service_worker": "service_worker.js",
       "type": "module"
     },
     "permissions": ["activeTab", "declarativeContent",

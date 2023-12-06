@@ -12,28 +12,24 @@ document.addEventListener('DOMContentLoaded', function () {
       // - Attach event listener to handle form submission
       document.getElementById('markItForm').addEventListener('submit', function (event) {
         event.preventDefault(); // Prevent the default form submission behavior
-
+        const noteInput = document.querySelector('#noteInput').value;
+        
         // Send a message to content script to request the timestamp
-        chrome.tabs.sendMessage(currentTab.id, { action: 'requestTimestamp' }, function(response) {
-          // This function will be called once the content script responds
-          if (response && response.action === 'updateTimestamp') {
-            const timestamp = response.timestamp;
-            // For example, update a span with the timestamp
-            document.querySelector('.timeStamp').innerHTML = timestamp;
-          }
-        });
-      });
+        chrome.runtime.sendMessage({ action: 'requestTimestamp', noteInput: noteInput });
 
       // - Implement the function to display existing timestamps
-      chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-        if (message.action === 'updateTimestamp') {
-          const timestamp = message.timestamp;
-          // For example, update a span with the timestamp
+      chrome.runtime.sendMessage({ action: 'getStoredTimestamp' }, function (response) {
+        if (response && response.action === 'updateTimestamp') {
+          const timestamp = response.timestamp;
+          const noteInput = response.noteInput;
           document.querySelector('.timeStamp').innerHTML = timestamp;
+          document.querySelector('.noteAdded').innerHTML = noteInput;
         }
       });
-
-    } else {
+      });
+    }
+    
+     else {
       // If not on a YouTube video page, display a message or take appropriate action
       const heading = document.querySelector('h1');
       heading.innerHTML = 'Not a YouTube video';
@@ -45,25 +41,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
+
   // Function to check if the given URL is a YouTube video page
   function isYouTubeVideoPage(url) {
     return url.includes('youtube.com') && url.includes('/watch');
-  }
-
-  function formSubmit() {
-    // Implement form submission logic if needed
-  }
-
-  function addTimeStampandNote() {
-    // Implement logic to add timestamps and notes
-  }
-
-  function displayTimeStamp() {
-    // Implement logic to display existing timestamps
-  }
-
-  function deleteTimeStamp() {
-    // Implement logic to delete timestamps
   }
 
 });
