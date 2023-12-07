@@ -47,3 +47,7 @@ h1,h2 {
 p{
   display: inline-block;
 }
+
+.submit-button{
+  visibility: visible;
+}

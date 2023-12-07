@@ -1,3 +1,4 @@
+console.log("hello there, service_worker here");
 let storedTimestamp = [];
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {

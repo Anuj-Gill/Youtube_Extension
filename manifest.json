@@ -14,7 +14,7 @@
     },
     "content_scripts": [
       {
-        "matches": ["https://www.youtube.com/*/"],
+        "matches": ["<all_urls>"],
         "js": ["contentScript.js"] 
         }
       ]
@@ -34,7 +34,7 @@
     },
     "permissions": ["activeTab", "declarativeContent",
     "storage", "tabs","scripting"],
-    "host_permissions":["https://www.youtube.com/*/"]
+    "host_permissions":["https://www.youtube.com/*"]
     
   
 }

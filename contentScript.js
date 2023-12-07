@@ -1,3 +1,5 @@
+console.log("hello there, i am contentScript");
+
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
   console.log(`Request recieved from popup.js: Message: ${message}`);
   if (message.action === 'requestTimestamp') {
@@ -6,10 +8,15 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     const currentTime = document.querySelector(".ytp-time-current").innerHTML;
     const noteInput  = message.noteInput;
     // Send the timestamp back to the popup
-    console.log("Sending data to script_worker");
+    console.log("Sending data to script_worker",currentTime,noteInput);
     chrome.runtime.sendMessage({ action: 'storeTimestamp', timestamp: currentTime, noteInput: noteInput });
+  }else if (message.action === "anotherAction") {
+    // Handle another action
+    console.log("Not working!!");
   }
 });
+
+console.log("hello there, i am contentScript endssssss");
 
 
 

@@ -17,7 +17,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const noteInput = document.querySelector('#noteInput').value;
         console.log(noteInput);
         // Send a message to content script to request the timestamp
-        chrome.runtime.sendMessage({ action: 'requestTimestamp', noteInput: noteInput });
+        // chrome.runtime.sendMessage({ action: 'requestTimestamp', noteInput: noteInput });
+        chrome.tabs.sendMessage(currentTab.id, { action: 'requestTimestamp', noteInput: noteInput });
         console.log("Msg sent to contentScript!");
 
       // - Implement the function to display existing timestamps
@@ -42,6 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const list = document.querySelector(".timeStampsList");
       list.style.visibility = "hidden";
       document.querySelector('body').style.height = "20px";
+      document.querySelector('.submit-button').style.visibility = "hidden"
     }
   });
 
