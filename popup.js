@@ -22,18 +22,48 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log("Msg sent to contentScript!");
 
       // - Implement the function to display existing timestamps
-      chrome.runtime.sendMessage({ action: 'getStoredTimestamp' }, function (response) {
-        console.log("Msg recieved from background: ",response);
-        if (response && response.action === 'updateTimestamp') {
-          const timestamp = response.timestamp;
-          const noteInput = response.noteInput;
-          document.querySelector('.timeStamp').innerHTML = timestamp;
-          document.querySelector('.noteAdded').innerHTML = noteInput;
-        }
-      });
-      });
-    }
-    
+      setInterval(() => {
+        chrome.runtime.sendMessage({ action: 'getStoredTimestamp' }, function (response) {
+          console.log("Msg received from background: ", response.storedTimestamp);
+          const timestampsList = document.querySelector('.timeStampsList');
+          timestampsList.innerHTML = '';
+        
+          if (response.action === 'updateTimestamp') {
+            for (let i = 0; i <= response.storedTimestamp.length; i++) {
+              const ts = response.storedTimestamp[i];
+        
+              // Create elements
+              const indexElement = document.createElement('p');
+              indexElement.textContent = i + 1; // Use i + 1 to avoid displaying 1 for all entries
+              indexElement.classList.add('index');
+        
+              const timestampElement = document.createElement('p');
+              timestampElement.textContent = ts["timestamp"];
+              timestampElement.classList.add('timeStamp');
+        
+              const noteElement = document.createElement('p');
+              noteElement.textContent = ts["noteInput"];
+              noteElement.classList.add('noteAdded');
+        
+              // Create container for each timestamp
+              const timestampContainer = document.createElement('div');
+              timestampContainer.appendChild(indexElement);
+              timestampContainer.appendChild(timestampElement);
+              timestampContainer.appendChild(noteElement);
+        
+              // Append container to timestamps list
+              timestampsList.appendChild(timestampContainer);
+            }
+          } 
+          else{
+            timestampsList.innerHTML = "Your timestamps are loading"
+          }
+        });
+        
+      }, 200);
+      
+    });
+  }
      else {
       // If not on a YouTube video page, display a message or take appropriate action
       const heading = document.querySelector('h1');

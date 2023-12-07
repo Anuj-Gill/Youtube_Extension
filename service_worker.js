@@ -10,10 +10,12 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     console.log(storedTimestamp);
   } else if (message.action === 'getStoredTimestamp') {
     // Respond to the popup's request with the stored timestamp
-    if (storedTimestamp.length > 0) {
-      sendResponse({ action: 'updateTimestamp', timestamp: storedTimestamp[0].timestamp, noteInput: storedTimestamp[0].noteInput });
+    if (storedTimestamp.length != 0) {
+      console.log("Sending correct thing");
+      sendResponse({ action: 'updateTimestamp', storedTimestamp});
     } else {
-      sendResponse({ action: 'updateTimestamp', timestamp: undefined, noteInput: undefined });
+      console.log("sending undefined");
+      sendResponse({ action: 'Have some patience', storedTimestamp});
     }
   }
 });
