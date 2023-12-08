@@ -37,14 +37,14 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 
     chrome.storage.sync.get({ videos: {} }, function (result) {
       const videoData = result.videos[currentTabUrl] || { timestamps: [] };
-      console.log("Values retrieved from the storage");
-      console.log(result);
-      console.log(videoData);
+      console.log("Values retrieved from the storage",result.videos[currentTabUrl]);
+      console.log("Retrived video data",videoData);
+      console.log("Retrived video data",videoData["timestamps"]);
       // console.log("Timestamp value is " + result.timestamp);
       // console.log("NoteInput value is " + result.noteInput);
       if (videoData.timestamps.length > 0) {
         console.log("Correct data sent!!");
-        sendResponse({ action: 'updateTimestamp', storedTimestamp: videoData.timestamps });
+        sendResponse({ action: 'updateTimestamp',storedTimestamps: videoData["timestamps"]  });
       } else {
         console.log('Nothing sent!');
         sendResponse({ action: 'No timestamps stored yet' });

@@ -2,6 +2,7 @@
 function displayTimestamps(timestamps) {
   const timestampsList = document.querySelector('.timeStampsList');
   timestampsList.innerHTML = '';
+  console.log(timestamps);
 
   for (let i = 0; i < timestamps.length; i++) {
     const ts = timestamps[i];
@@ -19,16 +20,29 @@ function displayTimestamps(timestamps) {
     noteElement.textContent = ts.noteInput;
     noteElement.classList.add('noteAdded');
 
+    // const deleteButton = document.createElement('button');
+    // deleteButton.innerHTML = `<svg viewBox="0 0 448 512" class="svgIcon"><path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"></path></svg>`;
+    // deleteButton.classList.add('button')
+
     // Create container for each timestamp
     const timestampContainer = document.createElement('div');
     timestampContainer.appendChild(indexElement);
     timestampContainer.appendChild(timestampElement);
     timestampContainer.appendChild(noteElement);
+    // timestampContainer.appendChild(deleteButton);
 
-    // Append container to timestamps list
     timestampsList.appendChild(timestampContainer);
+
+
+
   }
 }
+
+//function for delete functionallity 
+// function deleteItem(x, url) {
+//   chrome.runtime.sendMessage({action: 'deleteTimestamp', index: x, url : url});
+  
+// }
 
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function () {
@@ -61,7 +75,8 @@ document.addEventListener('DOMContentLoaded', function () {
           console.log(response);
 
           if (response && response.action === 'updateTimestamp') {
-            displayTimestamps(response.storedTimestamp);
+            console.log("calling display function!!");
+            displayTimestamps(response["storedTimestamps"]);
           } else {
             console.log('Invalid response or no timestamps stored yet:', response);
           }
@@ -71,14 +86,17 @@ document.addEventListener('DOMContentLoaded', function () {
       // Display timestamps when the popup is opened
       chrome.runtime.sendMessage({ action: 'getStoredTimestamp' ,currentTabUrl: currentTabUrl}, function (response) {
         console.log("Msg received from background: ");
-        console.log(response);
+        console.log(response["storedTimestamps"]);
 
         if (response && response.action === 'updateTimestamp') {
-          displayTimestamps(response.storedTimestamp);
+          console.log("calling display function!!");
+          displayTimestamps(response["storedTimestamps"]);
         } else {
           console.log('Invalid response or no timestamps stored yet:', response);
         }
       });
+
+      
 
     } else {
       // If not on a YouTube video page, display a message or take appropriate action
@@ -98,4 +116,6 @@ document.addEventListener('DOMContentLoaded', function () {
   function isYouTubeVideoPage(url) {
     return url.includes('youtube.com') && url.includes('/watch');
   }
+
+  
 });
