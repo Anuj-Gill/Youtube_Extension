@@ -1,4 +1,8 @@
 console.log("hello there, i am contentScript");
+const currentTabUrl = window.location.href;
+
+chrome.runtime.sendMessage({ action: 'storeCurrentTabUrl', currentTabUrl });
+
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
   console.log(`Request recieved from popup.js: Message: ${message}`);
@@ -15,8 +19,6 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     console.log("Not working!!");
   }
 });
-
-console.log("hello there, i am contentScript endssssss");
 
 
 
