@@ -38,6 +38,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     chrome.storage.sync.get({ videos: {} }, function (result) {
       const videoData = result.videos[currentTabUrl] || { timestamps: [] };
       console.log("Values retrieved from the storage",result.videos[currentTabUrl]);
+      console.log("Retrived video data",result);
       console.log("Retrived video data",videoData);
       console.log("Retrived video data",videoData["timestamps"]);
       // console.log("Timestamp value is " + result.timestamp);
