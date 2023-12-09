@@ -51,7 +51,17 @@ document.addEventListener('DOMContentLoaded', function () {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     const currentTab = tabs[0];
     console.log("Current tab: ",currentTab);
-    const currentTabUrl = tabs[0].url;
+    const normalUrl = tabs[0].url; 
+    let currentTabUrl = "";
+    console.log(currentTabUrl);
+    for(let i = 0; i < normalUrl.length; i++) {
+      if(normalUrl[i] == "&"){
+        break;
+      }
+      else{
+        currentTabUrl += normalUrl[i];
+      }
+    }
     console.log(currentTabUrl)
 
     // Check if the URL is a YouTube video page using the isYouTubeVideoPage 
