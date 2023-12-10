@@ -20,29 +20,57 @@ function displayTimestamps(timestamps) {
     noteElement.textContent = ts.noteInput;
     noteElement.classList.add('noteAdded');
 
-    // const deleteButton = document.createElement('button');
-    // deleteButton.innerHTML = `<svg viewBox="0 0 448 512" class="svgIcon"><path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"></path></svg>`;
-    // deleteButton.classList.add('button')
+    const toggleElement = document.createElement('button');
+    toggleElement.innerHTML = '<span class="back"></span> <span class="front"></span>'
+    toggleElement.classList.add("btn-class-name");
+
+
 
     // Create container for each timestamp
     const timestampContainer = document.createElement('div');
+    timestampContainer.classList.add("eachContainer");
     timestampContainer.appendChild(indexElement);
     timestampContainer.appendChild(timestampElement);
     timestampContainer.appendChild(noteElement);
-    // timestampContainer.appendChild(deleteButton);
+    timestampContainer.appendChild(toggleElement);
 
     timestampsList.appendChild(timestampContainer);
 
-
-
+    // Add event listeners to toggle buttons after they have been created
+    const toggleButtons = document.querySelectorAll('.btn-class-name');
+    toggleButtons.forEach((button, index) => {
+      button.addEventListener('click', function () {
+        handleToggleClick(index);
+      });
+    });
   }
 }
 
-//function for delete functionallity 
-// function deleteItem(x, url) {
-//   chrome.runtime.sendMessage({action: 'deleteTimestamp', index: x, url : url});
-  
-// }
+function handleToggleClick(index) {
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    const currentTab = tabs[0];
+    console.log("Current tab: ",currentTab);
+    const currentTabId = currentTab.id;
+    const normalUrl = tabs[0].url; 
+    let currentTabUrl = "";
+    console.log(currentTabUrl);
+    for(let i = 0; i < normalUrl.length; i++) {
+      if(normalUrl[i] == "&"){
+        break;
+      }
+      else{
+        currentTabUrl += normalUrl[i];
+      }
+    }
+    console.log(currentTabUrl)
+  console.log('Toggle button clicked on row with index:', index);
+  // You can now send the index and perform other actions
+  // Send a message to the service worker with the index
+  chrome.runtime.sendMessage({ action: 'handleToggleClick', index: index, currentTabUrl: currentTabUrl,currentTabId: currentTabId });
+});
+}
+
+
 
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function () {

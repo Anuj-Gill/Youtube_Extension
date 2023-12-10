@@ -31,4 +31,17 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     // Handle another action
     console.log("Not working!!");
   }
+  else if(message.action === "toggleToTimestamp") {
+    console.log(message.finalUrl);
+
+    const finalUrl = message.finalUrl;
+
+    // Update the URL
+    window.location.href = finalUrl;
+    console.log(window.location.href)
+
+    // Optionally, you might want to refresh the page after updating the URL
+    // This will ensure that the content script is re-injected and runs again
+    // window.location.reload(true);
+  }
 });

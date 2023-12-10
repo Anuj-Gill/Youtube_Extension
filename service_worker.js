@@ -28,7 +28,9 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
       lhs = parseInt(splittedArray[0]);
       rhs = parseInt(splittedArray[1]);
       lhs = lhs * 60;
-      tSecs = "&t=" + lhs + rhs + "s";
+      tSecs =  lhs + rhs;
+      console.log(tSecs)
+      tSecs = "&t=" + tSecs + "s"
     } else {
       tSecs = "&t=" + splittedArray[1] + "s";
     }
@@ -58,6 +60,32 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     });
   } else if (message.action === "getStoredTimestamp") {
     return true;
+  } else if(message.action === "handleToggleClick") {
+    console.log(message.currentTabUrl);
+    const currentTabId = message.currentTabId;
+    const normalUrl = message.currentTabUrl;
+    let currentTabUrl = "";
+
+    for (let i = 0; i < normalUrl.length; i++) {
+      if (normalUrl[i] == "&") {
+        break;
+      } else {
+        currentTabUrl += normalUrl[i];
+      }
+    }
+    console.log(currentTabUrl);
+    chrome.storage.sync.get({videos: {}} , function(result){
+      console.log(result);
+      const videoData = result.videos[currentTabUrl];
+      console.log(videoData);
+      const timeStampData = videoData["timestamps"];
+      const data = timeStampData[message.index]["tSecs"];
+      console.log(data);
+      const finalUrl = currentTabUrl + data;
+      console.log(finalUrl);
+
+      chrome.tabs.sendMessage(currentTabId, {action: "toggleToTimestamp", finalUrl : finalUrl})
+    })
   }
 });
 
