@@ -24,6 +24,10 @@ function displayTimestamps(timestamps) {
     toggleElement.innerHTML = '<span class="back"></span> <span class="front"></span>'
     toggleElement.classList.add("btn-class-name");
 
+    const deleteElement = document.createElement('button');
+    deleteElement.innerHTML = '<span class="text">Delete</span><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"></path></svg></span>'
+    deleteElement.classList.add("noselect");
+
 
 
     // Create container for each timestamp
@@ -33,6 +37,7 @@ function displayTimestamps(timestamps) {
     timestampContainer.appendChild(timestampElement);
     timestampContainer.appendChild(noteElement);
     timestampContainer.appendChild(toggleElement);
+    timestampContainer.appendChild(deleteElement);
 
     timestampsList.appendChild(timestampContainer);
 
@@ -41,6 +46,14 @@ function displayTimestamps(timestamps) {
     toggleButtons.forEach((button, index) => {
       button.addEventListener('click', function () {
         handleToggleClick(index);
+      });
+    });
+
+
+    const deleteButtons = document.querySelectorAll('.noselect');
+    deleteButtons.forEach((button, index) => {
+      button.addEventListener('click', function () {
+        handleDeleteClick(index);
       });
     });
   }
@@ -68,6 +81,27 @@ function handleToggleClick(index) {
   // Send a message to the service worker with the index
   chrome.runtime.sendMessage({ action: 'handleToggleClick', index: index, currentTabUrl: currentTabUrl,currentTabId: currentTabId });
 });
+}
+
+
+function handleDeleteClick(index){
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    const currentTab = tabs[0];
+    console.log("Current tab: ",currentTab);
+    const normalUrl = tabs[0].url; 
+    let currentTabUrl = "";
+    console.log(currentTabUrl);
+    for(let i = 0; i < normalUrl.length; i++) {
+      if(normalUrl[i] == "&"){
+        break;
+      }
+      else{
+        currentTabUrl += normalUrl[i];
+      }
+    }
+    console.log(currentTabUrl)
+  chrome.runtime.sendMessage({action: "deleteTimestamp",index: index, currentTabUrl: currentTabUrl});
+})
 }
 
 
