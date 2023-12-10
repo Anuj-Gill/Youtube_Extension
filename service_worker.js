@@ -4,7 +4,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
   console.log(sender);
   if (message.action === "storeTimestamp") {
     console.log("Received message in background script:", sender);
-    console.log(message.timestamp);
+    console.log(message.timestamp); // 00:06:17.split(":") = [00,06,17]
     console.log(message.timestamp);
     console.log(message.noteInput);
 

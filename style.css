@@ -6,6 +6,10 @@ body {
 h1,h2 {
   text-align: center;
 }
+h1{
+  font-size: 30px;
+}
+
 
 label{
   font-size: 15px;
@@ -15,8 +19,9 @@ label{
 
 #noteInput {
   width: 90%;
-  height: 15px;
+  height: 25px;
   margin-bottom: 15px;
+  font-size: 17px;
 
 }
 
@@ -66,7 +71,17 @@ p{
   font-size: 15px;
   margin-bottom: 4px;
   font-weight: 600;
+  padding: 10px;
+  margin-left: 27%;
+  background-color: #24b4fb;
+  transition: all ease-in-out 0.2s;
+  border: 2px solid #24b4fb;
+  border-radius: 7px;
 }
+
+.submit-button:hover {
+  background-color: #0071e2;
+ }
 
 .timeStampsList {
   margin: 0;
@@ -113,7 +128,7 @@ p{
 }
 
 .timeStampsList div:hover {
-  background-color: #eee;
+  background-color: #d6d6d6;
   cursor: pointer;
 }
 
@@ -210,7 +225,7 @@ button {
  button .icon {
   position: absolute;
   border-left: 1px solid #c41b1b;
-  transform: translateX(90px);
+  transform: translateX(70px);
   height: 40px;
   width: 40px;
   display: flex;
@@ -234,7 +249,7 @@ button {
  button:hover .icon {
   width: 80px;
   border-left: none;
-  transform: translateX(0);
+  transform: translateX(-4px);
  }
  
  button:focus {
