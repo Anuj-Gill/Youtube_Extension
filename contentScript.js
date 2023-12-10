@@ -40,7 +40,6 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     window.location.href = finalUrl;
     console.log(window.location.href)
 
-    // Optionally, you might want to refresh the page after updating the URL
     // This will ensure that the content script is re-injected and runs again
     // window.location.reload(true);
   }
